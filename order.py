@@ -1,11 +1,12 @@
 class Order:
-    all_orders = []  # Class level list that stores all the orders
+    all_orders = []  # Class level list that stores all the orders - AKA SSOT
 
-    # INITIALISATION
+    # INISTIALISATION
     def __init__(self, customer, coffee, price):
         self.customer = customer
         self.coffee = coffee
         self.price = price
+        Order.all_orders.append(self)  ## Adds an order to orders list
 
         @property  ## Customer getter
         def customer(self):
@@ -27,7 +28,7 @@ class Order:
 
         @coffee.setter
         def coffee(self, value):
-            from coffee import Coffee
+            from coffee import Coffee  ## Imports coffee class from coffee
 
             if not isinstance(value, Coffee):
                 raise TypeError("coffee must be a Coffee instance")
@@ -39,7 +40,9 @@ class Order:
 
         @price.setter
         def price(self, value):
-            if not isinstance((value, float) or isinstance(value, int)):
+            if not isinstance(
+                (value, float) or isinstance(value, int)
+            ):  ## IF has a decimal or is an integer then allow else raise an error
                 raise TypeError("Price must be a number")
             if not (1 <= value <= 10):
                 raise ValueError("Price must be between 1 and 10")
