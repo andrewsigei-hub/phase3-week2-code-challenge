@@ -51,12 +51,12 @@ def average_price(self):
 def most_aficionado(cls, coffee):
     from order import Order
 
-    # Step 1: Keep track of how much each customer spent on this coffee
+  #Keep track of how much each customer spent on this coffee
     spend = {}
 
-    # Step 2: Loop through all orders
+    # Loop through all orders
     for order in Order.all_orders:
-        # Only consider orders for the coffee we care about
+        
         if order.coffee is coffee:
             customer = order.customer
             # Add this order's price to the customer's total
@@ -65,11 +65,8 @@ def most_aficionado(cls, coffee):
             else:
                 spend[customer] = order.price
 
-    # Step 3: If no one has ordered this coffee, return None
-    if not spend:
-        return None
 
-    # Step 4: Find the customer who spent the most
+    # customer who spent the most
     most = None
     highest = 0
     for customer, total in spend.items():
@@ -77,5 +74,5 @@ def most_aficionado(cls, coffee):
             highest = total
             most = customer
 
-    # Step 5: Return that customer
+    #  Return that customer
     return most
