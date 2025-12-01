@@ -31,6 +31,5 @@ class Coffee:
         for order in self.orders(): # In all the orders get orders belonging to this coffee
             customers.add(order.customer)
             return list(customers) # Convert back to list and return, list only shows customer name once
-        
+    
 
-        

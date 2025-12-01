@@ -1,3 +1,6 @@
+from order import Order
+
+
 class Customer:
     def __init__(self, name):
         self.name = name
@@ -16,3 +19,63 @@ class Customer:
                 self._name = new_name
             else:
                 raise ValueError("Name must have 1-15 characters")
+
+    def order(self):
+        return [
+            order for order in Order.all_orders if order.customer is self
+        ]  ## Returns order is order belongs to said customer
+
+    def coffees(self):
+        unique_list = set()  # Ensures uniqueness as customer - No duplicates
+        for order in self.orders():  ## For orders belonging to the customer
+            unique_list.add(order.coffee)  ## Add the coffee to unique list
+        return list(unique_list)  ## REturns a unique list of customers orders
+
+    def create_order(self, coffee, price):
+        from order import Order  ## Import inside method to avoid circular imports
+
+        return Order(self, coffee, price)
+
+    def num_orders(self):
+        return len(self.orders())
+
+
+def average_price(self):
+    orders = self.orders()
+    if not orders:
+        return 0
+    return sum(order.price for order in orders) / len(orders)
+
+
+@classmethod
+def most_aficionado(cls, coffee):
+    from order import Order
+
+    # Step 1: Keep track of how much each customer spent on this coffee
+    spend = {}
+
+    # Step 2: Loop through all orders
+    for order in Order.all_orders:
+        # Only consider orders for the coffee we care about
+        if order.coffee is coffee:
+            customer = order.customer
+            # Add this order's price to the customer's total
+            if customer in spend:
+                spend[customer] += order.price
+            else:
+                spend[customer] = order.price
+
+    # Step 3: If no one has ordered this coffee, return None
+    if not spend:
+        return None
+
+    # Step 4: Find the customer who spent the most
+    most = None
+    highest = 0
+    for customer, total in spend.items():
+        if total > highest:
+            highest = total
+            most = customer
+
+    # Step 5: Return that customer
+    return most
